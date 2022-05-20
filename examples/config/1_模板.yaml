@@ -2,4 +2,5 @@
 ### templates 模板
 name: set
 type: true
-cmd: true
+jobs:
+- cmd: true

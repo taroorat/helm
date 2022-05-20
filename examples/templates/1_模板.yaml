@@ -3,9 +3,9 @@ name: {{ .Values.name }}
 {{- if .Values.type }}
 type: true
 {{- end}}
-
+jobs:
 {{- if .Values.cmd }}
-cmd: true
+- cmd: true
 {{else}}
-cmd: false
+- cmd: false
 {{- end}}
