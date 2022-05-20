@@ -538,7 +538,7 @@ func (i *Install) replaceRelease(rel *release.Release) error {
 func writeToFile(outputDir string, name string, data string, append bool) error {
 	// 将输出目录改为outputDir+"config"
 	sep := string(filepath.Separator)
-	re, _ := regexp.Compile("^.*templates" + sep)
+	re, _ := regexp.Compile("^.*tpls" + sep)
 	outName := re.ReplaceAllString(name, "config"+sep)
 
 	outfileName := strings.Join([]string{outputDir, outName}, string(filepath.Separator))

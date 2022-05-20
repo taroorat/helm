@@ -1,0 +1,11 @@
+### tpl
+name: {{ .Values.name }}
+  {{- if .Values.type }}
+type: true
+  {{- end}}
+jobs:
+  {{- if .Values.cmd }}
+- cmd: true
+  {{else}}
+- cmd: false
+  {{- end}}

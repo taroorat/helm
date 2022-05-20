@@ -1,6 +1,0 @@
-# Source: templates/1_模板.yaml
-### templates 模板
-name: set
-type: true
-jobs:
-- cmd: true
