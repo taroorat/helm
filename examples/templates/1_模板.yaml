@@ -1,3 +1,4 @@
+### templates 模板
 name: {{ .Values.name }}
 {{- if .Values.type }}
 type: true
