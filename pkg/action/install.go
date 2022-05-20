@@ -25,6 +25,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"text/template"
@@ -535,8 +536,12 @@ func (i *Install) replaceRelease(rel *release.Release) error {
 
 // write the <data> to <output-dir>/<name>. <append> controls if the file is created or content will be appended
 func writeToFile(outputDir string, name string, data string, append bool) error {
-	outfileName := strings.Join([]string{outputDir, name}, string(filepath.Separator))
+	// 将输出目录改为outputDir+"config"
+	sep := string(filepath.Separator)
+	re, _ := regexp.Compile("^.*tpls" + sep)
+	outName := re.ReplaceAllString(name, "config"+sep)
 
+	outfileName := strings.Join([]string{outputDir, outName}, string(filepath.Separator))
 	err := ensureDirectoryForFile(outfileName)
 	if err != nil {
 		return err
@@ -549,13 +554,15 @@ func writeToFile(outputDir string, name string, data string, append bool) error 
 
 	defer f.Close()
 
-	_, err = f.WriteString(fmt.Sprintf("---\n# Source: %s\n%s\n", name, data))
+	_, err = f.WriteString(fmt.Sprintf("# Source: %s\n%s\n", name, data))
 
 	if err != nil {
 		return err
 	}
 
 	fmt.Printf("wrote %s\n", outfileName)
+	fmt.Println("#############data##################")
+	fmt.Printf("# Source: %s\n%s\n", name, data)
 	return nil
 }
 

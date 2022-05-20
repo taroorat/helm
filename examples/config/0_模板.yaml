@@ -1,0 +1,6 @@
+# Source: tpls/0_模板.yaml
+### tpl
+name: set
+type: true
+jobs:
+- cmd: true
