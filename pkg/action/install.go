@@ -25,6 +25,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"text/template"
@@ -535,9 +536,12 @@ func (i *Install) replaceRelease(rel *release.Release) error {
 
 // write the <data> to <output-dir>/<name>. <append> controls if the file is created or content will be appended
 func writeToFile(outputDir string, name string, data string, append bool) error {
+	// 将输出目录改为outputDir+"config"
+	sep := string(filepath.Separator)
+	re, _ := regexp.Compile("^.*templates" + sep)
+	outName := re.ReplaceAllString(name, "config"+sep)
 
-	outfileName := strings.Join([]string{outputDir, name}, string(filepath.Separator))
-
+	outfileName := strings.Join([]string{outputDir, outName}, string(filepath.Separator))
 	err := ensureDirectoryForFile(outfileName)
 	if err != nil {
 		return err

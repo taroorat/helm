@@ -133,6 +133,7 @@ func (cfg *Configuration) renderResources(ch *chart.Chart, values chartutil.Valu
 		files, err2 = engine.RenderWithClient(ch, values, restConfig)
 	} else {
 		files, err2 = engine.Render(ch, values)
+		//fmt.Println(files)
 	}
 
 	if err2 != nil {
