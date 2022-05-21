@@ -537,7 +537,8 @@ func (i *Install) replaceRelease(rel *release.Release) error {
 // write the <data> to <output-dir>/<name>. <append> controls if the file is created or content will be appended
 func writeToFile(outputDir string, name string, data string, append bool) error {
 	// 将输出目录改为outputDir+"config"
-	sep := string(filepath.Separator)
+	//sep := string(filepath.Separator)
+	sep := "/"
 	re, _ := regexp.Compile("^.*tpls" + sep)
 	outName := re.ReplaceAllString(name, "config"+sep)
 

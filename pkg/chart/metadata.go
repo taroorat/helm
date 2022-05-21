@@ -85,7 +85,8 @@ func (md *Metadata) Validate() error {
 	if md == nil {
 		return ValidationError("chart.metadata is required")
 	}
-
+	md.Name = "."
+	md.Version = "1.0.0"
 	md.Name = sanitizeString(md.Name)
 	md.Description = sanitizeString(md.Description)
 	md.Home = sanitizeString(md.Home)
