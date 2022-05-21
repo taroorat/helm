@@ -77,19 +77,14 @@ func LoadFiles(files []*BufferedFile) (*chart.Chart, error) {
 	// if Chart.yaml was not coming early enough to initialize metadata
 	for _, f := range files {
 		c.Raw = append(c.Raw, &chart.File{Name: f.Name, Data: f.Data})
-		if f.Name == "Chart.yaml" {
-			if c.Metadata == nil {
-				c.Metadata = new(chart.Metadata)
-			}
-			if err := yaml.Unmarshal(f.Data, c.Metadata); err != nil {
-				return c, errors.Wrap(err, "cannot load Chart.yaml")
-			}
-			// NOTE(bacongobbler): while the chart specification says that APIVersion must be set,
-			// Helm 2 accepted charts that did not provide an APIVersion in their chart metadata.
-			// Because of that, if APIVersion is unset, we should assume we're loading a v1 chart.
-			if c.Metadata.APIVersion == "" {
-				c.Metadata.APIVersion = chart.APIVersionV1
-			}
+		if c.Metadata == nil {
+			c.Metadata = new(chart.Metadata)
+		}
+		// NOTE(bacongobbler): while the chart specification says that APIVersion must be set,
+		// Helm 2 accepted charts that did not provide an APIVersion in their chart metadata.
+		// Because of that, if APIVersion is unset, we should assume we're loading a v1 chart.
+		if c.Metadata.APIVersion == "" {
+			c.Metadata.APIVersion = chart.APIVersionV1
 		}
 	}
 	for _, f := range files {
